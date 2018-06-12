@@ -18,4 +18,4 @@ If anyone has any suggestions for better replacements, feel free to do so~
 `aaorb color/colour/switch/switchcolor/switchcolour/change` -  toggles switchColors
 
 ## Screenshot:
-![screenshot](https://imgur.com/Om620Vv)
+![screenshot](https://i.imgur.com/Om620Vv.jpg)
