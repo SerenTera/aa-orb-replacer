@@ -10,7 +10,7 @@ Dark orb replaced with stone orb from timescape
 If anyone has any suggestions for better replacements, feel free to do so~
 
 ## Config
-`switchColors` - Default false. True reverses the replacement, where, with black aura debuff, you hit the black orb instead.
+`switchColors` - Default false. True reverses the replacement, where light orb is replaced with stone orb from timescape and vice versa, thus, with black aura debuff, you hit the black orb instead.
 `instantDespawn` - Leave this to true or else it will stay around for longer than necessary
 
 ## Commands:
