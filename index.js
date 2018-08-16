@@ -17,8 +17,9 @@ const Command = require('command'),
 	config = require('./config')
 	
 const zone = [9720,9920],
-	skillIdAlive = [1188037741,1188037742,1201144941,1201144942],
-	skillIdDie = [1188037745,1188037744,1201144944,1201144945]
+	skillIdAlive = [1133,1134],
+	skillIdDie = [1137,1136],
+	huntingZones = [720,920]
 
 
 module.exports = function aaorb(dispatch) {
@@ -81,7 +82,7 @@ module.exports = function aaorb(dispatch) {
 	
 	
 	function load() { //Reduce overhead when not in AA
-		hook('S_SPAWN_NPC', 8, {filter:{fake:null, modified:null}}, event => {
+		hook('S_SPAWN_NPC', 9, event => {
 			if(enabled && (event.huntingZoneId === 720 || event.huntingZoneId === 920)) {
 				if(event.templateId === 3002) {//White bead
 					event.unk1 = switchColors ? darkShapeId : lightShapeId
@@ -94,11 +95,13 @@ module.exports = function aaorb(dispatch) {
 			}
 		})
 		
-		hook('S_ACTION_STAGE', 5, {filter:{fake:null, modified:null}}, event => {
+		hook('S_ACTION_STAGE', dispatch.base.majorPatchVersion >= 74 ? 7 : 6, event => {
 			if(enabled && (event.templateId === 3002 || event.templateId === 3003)) {
-				if(skillIdAlive.includes(event.skill)) return false;
+				if(!huntingZones.includes(event.skill.huntingZoneId)) return;
 				
-				else if(instantDespawn && skillIdDie.includes(event.skill)) {
+				if(skillIdAlive.includes(event.skill.id)) return false;
+				
+				else if(instantDespawn && skillIdDie.includes(event.skill.id)) {
 					dispatch.toClient('S_DESPAWN_NPC', 1, {
 						target: event.gameId,
 						type: 1	
