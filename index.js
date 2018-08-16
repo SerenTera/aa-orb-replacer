@@ -85,11 +85,11 @@ module.exports = function aaorb(dispatch) {
 		hook('S_SPAWN_NPC', 9, event => {
 			if(enabled && (event.huntingZoneId === 720 || event.huntingZoneId === 920)) {
 				if(event.templateId === 3002) {//White bead
-					event.unk1 = switchColors ? darkShapeId : lightShapeId
+					event.shapeId = switchColors ? darkShapeId : lightShapeId
 					return true
 				}
 				else if(event.templateId === 3003) { //Dark Bead
-					event.unk1 = switchColors ? lightShapeId : darkShapeId
+					event.shapeId = switchColors ? lightShapeId : darkShapeId
 					return true
 				}
 			}
