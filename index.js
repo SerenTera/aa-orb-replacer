@@ -13,8 +13,7 @@ Dark orb substitute : 1. 756_408, dark orb, shape:650010
 Might be buggy
 */
 
-const Command = require('command'),
-	config = require('./config')
+const config = require('./config')
 	
 const zone = [9720,9920],
 	skillIdAlive = [1133,1134],
@@ -22,8 +21,7 @@ const zone = [9720,9920],
 	huntingZones = [720,920]
 
 
-module.exports = function aaorb(dispatch) {
-	const command = Command(dispatch)
+module.exports = function aaorb(mod) {
 	
 	let {enabled,switchColors,instantDespawn,lightShapeId,darkShapeId} = config,
 		inDungeon = false,
@@ -34,10 +32,10 @@ module.exports = function aaorb(dispatch) {
 
 
 ////Commands	
-	command.add('aaorb', (sub,substr) => {
+	mod.command.add('aaorb', (sub,substr) => {
 		if(sub === undefined) {
 			enabled = !enabled
-			command.message(`(AA ORB) ${enabled ? 'enabled' : 'disabled'}`) 
+			mod.command.message(`(AA ORB) ${enabled ? 'enabled' : 'disabled'}`) 
 		}
 		else
 			switch(sub) {
@@ -48,16 +46,16 @@ module.exports = function aaorb(dispatch) {
 				case 'colour':
 				case 'change':
 					switchColors = !switchColors
-					command.message(`(AA ORB) Switch colors: ${switchColors}`) 
+					mod.command.message(`(AA ORB) Switch colors: ${switchColors}`) 
 					break
 				case 'hook':
 					load()
-					command.message(`(AA ORB) Hooked`) 
+					mod.command.message(`(AA ORB) Hooked`) 
 					break
 				case 'unhook':
 				case 'unload':
 					unload()
-					command.message(`(AA ORB) Unhooked`) 
+					mod.command.message(`(AA ORB) Unhooked`) 
 					break
 				case 'light':
 					lightShapeId = parseInt(substr)
@@ -66,12 +64,12 @@ module.exports = function aaorb(dispatch) {
 					darkShapeId = parseInt(substr)
 					break
 				default:
-					command.message('(AA ORB) Unknown Command')
+					mod.command.message('(AA ORB) Unknown Command')
 			}
 	})
 	
 /////Hooks	
-	dispatch.hook('S_LOAD_TOPO', 3, event => {
+	mod.hook('S_LOAD_TOPO', 3, event => {
 		inDungeon = zone.includes(event.zone)
 		
 		if(inDungeon && enabled) load();
@@ -95,14 +93,14 @@ module.exports = function aaorb(dispatch) {
 			}
 		})
 		
-		hook('S_ACTION_STAGE', dispatch.base.majorPatchVersion >= 74 ? 7 : 6, event => {
+		hook('S_ACTION_STAGE', mod.majorPatchVersion >= 74 ? 7 : 6, event => {
 			if(enabled && (event.templateId === 3002 || event.templateId === 3003)) {
 				if(!huntingZones.includes(event.skill.huntingZoneId)) return;
 				
 				if(skillIdAlive.includes(event.skill.id)) return false;
 				
 				else if(instantDespawn && skillIdDie.includes(event.skill.id)) {
-					dispatch.toClient('S_DESPAWN_NPC', 1, {
+					mod.send('S_DESPAWN_NPC', 1, {
 						target: event.gameId,
 						type: 1	
 					})
@@ -115,14 +113,14 @@ module.exports = function aaorb(dispatch) {
 /////Function			
 	function unload() { //thank pinkie
 		if(hooks.length) {
-			for(let h of hooks) dispatch.unhook(h)
+			for(let h of hooks) mod.unhook(h)
 
 			hooks = []
 		}
 	}
 
 	function hook() {
-		hooks.push(dispatch.hook(...arguments))
+		hooks.push(mod.hook(...arguments))
 	}
 
 }
