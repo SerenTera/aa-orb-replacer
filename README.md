@@ -1,7 +1,7 @@
 # aa-orb-replacer
-(Untested) Attempt to replace the orbs in Antaros abyss with better sphere shape
+Replace the orbs in Antaros abyss with better sphere shape
 
-READ ====>>>>> UNTESTED MODULE, USE AT YOUR OWN DISCRETION <<<<==== READ
+Module is actually quite bad, if anyone has suggestions can feedback~
 
 Light orb replaced with straw football (already tried an energy orb, unfortunately an invisible npc shape Id)
 
