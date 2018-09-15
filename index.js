@@ -93,7 +93,7 @@ module.exports = function aaorb(mod) {
 			}
 		})
 		
-		hook('S_ACTION_STAGE', mod.majorPatchVersion >= 74 ? 7 : 6, event => {
+		hook('S_ACTION_STAGE', mod.majorPatchVersion >= 75 ? 8 : 7, event => {
 			if(enabled && (event.templateId === 3002 || event.templateId === 3003)) {
 				if(!huntingZones.includes(event.skill.huntingZoneId)) return;
 				
