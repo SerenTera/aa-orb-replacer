@@ -80,7 +80,7 @@ module.exports = function aaorb(mod) {
 	
 	
 	function load() { //Reduce overhead when not in AA
-		hook('S_SPAWN_NPC', 9, event => {
+		hook('S_SPAWN_NPC', 10, event => {
 			if(enabled && (event.huntingZoneId === 720 || event.huntingZoneId === 920)) {
 				if(event.templateId === 3002) {//White bead
 					event.shapeId = switchColors ? darkShapeId : lightShapeId
@@ -93,7 +93,7 @@ module.exports = function aaorb(mod) {
 			}
 		})
 		
-		hook('S_ACTION_STAGE', mod.majorPatchVersion >= 75 ? 8 : 7, event => {
+		hook('S_ACTION_STAGE', 8, event => {
 			if(enabled && (event.templateId === 3002 || event.templateId === 3003)) {
 				if(!huntingZones.includes(event.skill.huntingZoneId)) return;
 				
